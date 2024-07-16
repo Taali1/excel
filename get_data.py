@@ -47,13 +47,41 @@ def get_xml():
         root = parse_xml(xml_data)
         if root is not None:
             xml_dict = xml_to_dict(root)
-            # Print the dictionary as a nicely formatted JSON string
-            json_str = json.dumps(xml_dict, indent=4, ensure_ascii=False)
-            
-            # Save the dictionary to a text file
-            with open('xml_data.txt', 'w', encoding='utf-8') as file:
-                file.write(json_str)
             
             return xml_dict
 
-# Run the function to fetch and print XML data as a dictionary
+def filter_xml(xml):
+    result = []
+    xml = xml['offers']['o']
+
+    for product in xml:
+        if int(product['avail']) > 0:
+            result += [product]
+        else:
+            continue
+    return result
+
+def group_xml(xml, group):
+    return [product for product in xml if product['cat']['text'] in group]
+
+def save_xml(xml):
+    json_str = json.dumps(xml, indent=4, ensure_ascii=False)
+    with open('xml_data.txt', 'w', encoding='utf-8') as file:
+        file.write(json_str)
+
+groups = [
+    ['/FIRANY/FIRANY GOTOWE/ŻAKARDOWE'], # Firany gotowe
+    ['/FIRANY/FIRANY GOTOWE/MAKRAMY', '/FIRANY/FIRANY GOTOWE/PANELE'], #Makramy i Panele
+    ['/KOCE I NARZUTY/NARZUTY'], # Narzuty
+    ['/OBRUSY I BIEŻNIKI/OBRUSY', '/OBRUSY I BIEŻNIKI/BIEŻNIKI I SERWETY'], # Obrusy i bierzniki
+    ['POSZEWKI I PODUSZKI/POSZEWKI', 'POSZEWKI I PODUSZKI/PODUSZKI'], # Poszewki i poduszki
+    ['/POŚCIEL I PRZEŚCIERADŁA/POŚCIEL', '/POŚCIEL I PRZEŚCIERADŁA/PRZEŚCIERADŁA'], # Pościele i prześcieradła
+    ['/RĘCZNIKI I ŚCIERKI/RĘCZNIKI', '/RĘCZNIKI I ŚCIERKI/ŚCIERKI KUCHENNE'], # Ręczniki i ścierki
+    ['/TKANINY I ZASŁONY/ZASŁONY GOTOWE/JEDNOBARWNE'] # Zasłony gotowe
+]
+
+
+xml = get_xml()
+xml = filter_xml(xml)
+xml = group_xml(xml, groups[0])
+print(len(xml))

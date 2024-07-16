@@ -1,14 +1,9 @@
 from pylatex import Document, Section, Subsection, Tabular, MiniPage, NoEscape, NewPage, Command
 from pylatex.utils import bold
-from get_data import get_xml
+from get_data import get_xml, filter_xml
 
-def create_pdf():
-    # Create a new LaTeX document
+def create_pdf(products, title: str) -> None:
     doc = Document()
-
-    products = get_xml()
-
-    products = products['offers']['o']
 
     for product in products:
         with doc.create(Section(f"Nazwa produktu: {product["name"]["text"]}")):
@@ -44,4 +39,4 @@ def create_pdf():
         doc.append(NewPage())
 
     # Generate the PDF
-    doc.generate_pdf("product_presentation", clean_tex=False)
+    doc.generate_pdf(title, clean_tex=False)
