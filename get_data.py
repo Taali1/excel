@@ -80,8 +80,33 @@ groups = [
     ['/TKANINY I ZASŁONY/ZASŁONY GOTOWE/JEDNOBARWNE'] # Zasłony gotowe
 ]
 
+def separate_desc(desc: str, name: str) -> dict:
+    desc = desc.split('<br>')
+    desc_result = {}
+    for x in desc:
+        temp = x.split(':')
+        match temp[0][1:]:
+            case 'Kolor':
+                desc_result['color'] = temp[1]
+            case 'Skład':
+                desc_result['sklad'] = temp[1]
+            case 'Gramatura': 
+                desc_result['gramatura'] = temp[1]
+    name = name.split(',')
+    size = name[1].split('x')
+    name_result = {}
+    for x in size:
+        temp = x.split()
+        match temp[0]:
+            case 'wysokość':
+                name_result['height'] = temp[1][:-2]
+            case 'szerokość':
+                name_result['width'] = temp[1]
+    
+    return desc_result, name_result
 
-xml = get_xml()
-xml = filter_xml(xml)
-xml = group_xml(xml, groups[0])
-print(len(xml))
+
+# xml = get_xml()
+# xml = filter_xml(xml)
+# xml = group_xml(xml, groups[0])
+# print(len(xml))
