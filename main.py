@@ -6,7 +6,7 @@ groups = [
     ['/FIRANY/FIRANY GOTOWE/MAKRAMY', '/FIRANY/FIRANY GOTOWE/PANELE'], #Makramy i Panele
     ['/KOCE I NARZUTY/NARZUTY'], # Narzuty
     ['/OBRUSY I BIEŻNIKI/OBRUSY', '/OBRUSY I BIEŻNIKI/BIEŻNIKI I SERWETY'], # Obrusy i bierzniki
-    ['POSZEWKI I PODUSZKI/POSZEWKI', 'POSZEWKI I PODUSZKI/PODUSZKI'], # Poszewki i poduszki
+    ['/POSZEWKI I PODUSZKI/POSZEWKI', '/POSZEWKI I PODUSZKI/PODUSZKI'], # Poszewki i poduszki
     ['/POŚCIEL I PRZEŚCIERADŁA/POŚCIEL', '/POŚCIEL I PRZEŚCIERADŁA/PRZEŚCIERADŁA'], # Pościele i prześcieradła
     ['/RĘCZNIKI I ŚCIERKI/RĘCZNIKI', '/RĘCZNIKI I ŚCIERKI/ŚCIERKI KUCHENNE'], # Ręczniki i ścierki
     ['/TKANINY I ZASŁONY/ZASŁONY GOTOWE/JEDNOBARWNE'] # Zasłony gotowe
@@ -36,10 +36,10 @@ if __name__ == "__main__":
         choice = menu()
 
         if choice == 9:
-            for x in range(9):
+            for x in range(8):
                 products = group_xml(filter_xml(get_xml()), groups[x])
                 create_page(products, groups_titles[x][4:])
-                print("HTML for "+groups_titles[x][:4]+" done")
+                print("HTML for "+groups_titles[x][4:]+" done")
 
         elif choice > 0 and choice < 9:
             products = group_xml(filter_xml(get_xml()), groups[choice-1])

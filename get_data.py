@@ -69,39 +69,39 @@ def save_xml(xml):
     with open('xml_data.txt', 'w', encoding='utf-8') as file:
         file.write(json_str)
 
-groups = [
-    ['/FIRANY/FIRANY GOTOWE/ŻAKARDOWE'], # Firany gotowe
-    ['/FIRANY/FIRANY GOTOWE/MAKRAMY', '/FIRANY/FIRANY GOTOWE/PANELE'], #Makramy i Panele
-    ['/KOCE I NARZUTY/NARZUTY'], # Narzuty
-    ['/OBRUSY I BIEŻNIKI/OBRUSY', '/OBRUSY I BIEŻNIKI/BIEŻNIKI I SERWETY'], # Obrusy i bierzniki
-    ['POSZEWKI I PODUSZKI/POSZEWKI', 'POSZEWKI I PODUSZKI/PODUSZKI'], # Poszewki i poduszki
-    ['/POŚCIEL I PRZEŚCIERADŁA/POŚCIEL', '/POŚCIEL I PRZEŚCIERADŁA/PRZEŚCIERADŁA'], # Pościele i prześcieradła
-    ['/RĘCZNIKI I ŚCIERKI/RĘCZNIKI', '/RĘCZNIKI I ŚCIERKI/ŚCIERKI KUCHENNE'], # Ręczniki i ścierki
-    ['/TKANINY I ZASŁONY/ZASŁONY GOTOWE/JEDNOBARWNE'] # Zasłony gotowe
-]
-
 def separate_desc(desc: str, name: str) -> dict:
-    desc = desc.split('<br>')
     desc_result = {}
-    for x in desc:
-        temp = x.split(':')
-        match temp[0][1:]:
-            case 'Kolor':
-                desc_result['color'] = temp[1]
-            case 'Skład':
-                desc_result['sklad'] = temp[1]
-            case 'Gramatura': 
-                desc_result['gramatura'] = temp[1]
-    name = name.split(',')
-    size = name[1].split('x')
     name_result = {}
-    for x in size:
-        temp = x.split()
-        match temp[0]:
-            case 'wysokość':
-                name_result['height'] = temp[1][:-2]
-            case 'szerokość':
-                name_result['width'] = temp[1]
+
+    try:
+        desc = desc.split('<br>')
+        for x in desc:
+            temp = x.split(':')
+            match temp[0][1:]:
+                case 'Kolor':
+                    desc_result['color'] = temp[1]
+                case 'Skład':
+                    desc_result['sklad'] = temp[1]
+                case 'Gramatura': 
+                    desc_result['gramatura'] = temp[1]
+    except: 
+        pass
+    
+    # print(desc_result, name.split(',')[-1].split(' ')[-1])
+
+    try:
+        name = name.split(',')
+        size = name[1].split('x')
+
+        for x in size:
+            temp = x.split()
+            match temp[0]:
+                case 'wysokość':
+                    name_result['height'] = temp[1].replace(' cm', '')
+                case 'szerokość':
+                    name_result['width'] = temp[1].replace(' cm', '')
+    except: 
+        pass
     
     return desc_result, name_result
 
