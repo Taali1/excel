@@ -90,19 +90,31 @@ def separate_desc(desc: str, name: str) -> dict:
 
     try:
         name = name.split(',')
-        size = name[1].split('x')
+        size = name[1].strip().split('x')
+        size = [size[0].strip().split(' '), size[1].strip().split(' ')]
 
-        for x in size:
-            temp = x.split()
-            temp0 = temp[0]
-            temp1 = temp[1].replace('cm', '')
-            match temp0:
-                case 'wysokość':
-                    name_result['height'] = temp1
-                case 'szerokość':
-                    name_result['width'] = temp1
-    except: 
-        pass
+        try: 
+            if size[0][0] == 'rozmiar':
+                width = size[0][-1].replace('cm', '')
+                height = size[1][0].replace('cm', '')
+            else:
+                width = size[0][-1].replace('cm', '')
+                height = size[1][-1].replace('cm', '')
+        except:
+            width = size[0][0].strip().replace('cm', '')
+            height = size[1][0].strip().replace('cm', '')
+
+        name_result['height'] = width
+        name_result['width'] = height
+
+        try:
+            width = int(width)
+            height = int(height)
+        except:
+            name_result = {}
+
+    except Exception as error:
+        print("An exception occurred:", error)
     
     return desc_result, name_result
 
