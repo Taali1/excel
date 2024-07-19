@@ -16,6 +16,16 @@ def create_page(products: dict, title: str) -> str:
         # if len(desc_data) + len(name_data) < 5:
         #     continue
 
+
+        gross_price = float(product['price'])
+        netto_price = round((gross_price*.8130081300813008), 2)
+        off_price = round((netto_price*.75), 2)
+        off_price_str = str(off_price)
+
+        if len(off_price_str.split('.')[1]) == 1:
+            off_price_str += '0'
+        
+
         try: 
             result_div += generate_div(
                 product['imgs']['main']['url'], 
@@ -27,9 +37,8 @@ def create_page(products: dict, title: str) -> str:
                 name_data.get('width') or '<i>Null</i>',
                 name_data.get('height') or '<i>Null</i>', 
                 
-                # Zmiana cen. Netto jest pirewsza, po rabacie druga
-                float(product['price'])*1, 
-                float(product['price'])*1 
+                netto_price, 
+                off_price_str
                 )
         except Exception as error:
             print("An exception occurred:", error)
@@ -39,7 +48,7 @@ def create_page(products: dict, title: str) -> str:
 
     html = generate_html(result_div, title)
 
-    with open(f'{title}.html', 'w', encoding='utf-8') as file:
+    with open(f'OUTPUT/{title}.html', 'w', encoding='utf-8') as file:
         file.write(html)
 
     print("HTML file has been created with name: " + title + ".html")
