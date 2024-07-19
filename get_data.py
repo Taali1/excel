@@ -94,11 +94,13 @@ def separate_desc(desc: str, name: str) -> dict:
 
         for x in size:
             temp = x.split()
-            match temp[0]:
+            temp0 = temp[0]
+            temp1 = temp[1].replace('cm', '')
+            match temp0:
                 case 'wysokość':
-                    name_result['height'] = temp[1].replace(' cm', '')
+                    name_result['height'] = temp1
                 case 'szerokość':
-                    name_result['width'] = temp[1].replace(' cm', '')
+                    name_result['width'] = temp1
     except: 
         pass
     

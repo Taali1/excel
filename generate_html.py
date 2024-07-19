@@ -12,6 +12,7 @@ def create_page(products: dict, title: str) -> str:
     for product in products:
         desc_data, name_data = separate_desc(product['desc']['text'], product['name']['text'])
 
+        # Procesuje tylko dane które mają wszystkie wartości takie jak gramatura itp
         # if len(desc_data) + len(name_data) < 5:
         #     continue
 
@@ -25,8 +26,10 @@ def create_page(products: dict, title: str) -> str:
                 desc_data.get('sklad') or '<i>Null</i>', 
                 name_data.get('width') or '<i>Null</i>',
                 name_data.get('height') or '<i>Null</i>', 
-                product['price'], 
-                product['price']
+                
+                # Zmiana cen. Netto jest pirewsza, po rabacie druga
+                float(product['price'])*1, 
+                float(product['price'])*1 
                 )
         except Exception as error:
             print("An exception occurred:", error)
