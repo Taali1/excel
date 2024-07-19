@@ -90,7 +90,7 @@ def separate_desc(desc: str, name: str) -> dict:
 
     try:
         name = name.split(',')
-        size = name[1].strip().split('x')
+        size = name[1].strip().lower().split('x')
         size = [size[0].strip().split(' '), size[1].strip().split(' ')]
 
         try: 
