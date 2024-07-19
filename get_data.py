@@ -1,7 +1,6 @@
 import requests
 import json
 import xml.etree.ElementTree as ET
-import pandas as pd
 
 # Load the configuration file
 with open('config.json', 'r') as file:
@@ -86,7 +85,7 @@ def separate_desc(desc: str, name: str) -> dict:
                     desc_result['gramatura'] = temp[1]
     except: 
         pass
-    
+
     # print(desc_result, name.split(',')[-1].split(' ')[-1])
 
     try:
