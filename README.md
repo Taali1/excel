@@ -1,10 +1,16 @@
-Instalujesz Git Desktop oraz Doscker Desktop
+Instalujesz Git Desktop oraz Python
 
-Uruchamiasz tą komendę
+Uruchamiasz te komendy
 ```bash
-git clone https://github.com/Taali1/excel.git && cd excel && docker build -t excel-image . && docker run -d -p 3000:3000 --name excel-container excel-image
-
+curl -o python-installer.exe https://www.python.org/ftp/python/3.12.4/python-3.12.4-amd64.exe
+```
+```bash
+git clone https://github.com/Taali1/excel.git
+```
+```bash
+pip install requests==2.32.3
 ```
 
+Następnie uruchom `run.bat` w pobranym folderze
 
 W folderze który się pobrał jest folder OUTPUT. Tam znajdują się wszystkie HTMLe
