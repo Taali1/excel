@@ -2,7 +2,6 @@ import requests
 import json
 import xml.etree.ElementTree as ET
 
-# Load the configuration file
 with open('config.json', 'r') as file:
     config = json.load(file)
 

@@ -1,12 +1,18 @@
 from template import generate_div, generate_html
 from get_data import separate_desc
+import json
+
+# Load the configuration file
+with open('config.json', 'r') as file:
+    config = json.load(file)
+
 
 def exists(data, value):
     if data[value]:
         return data[value]
     return '.'
 
-def create_page(products: dict, title: str) -> str:
+def create_page(products: dict, title: str, off_amount: float = 1.0) -> str:
     result_div = ''
     count = 0
     for product in products:
@@ -22,7 +28,7 @@ def create_page(products: dict, title: str) -> str:
         netto_price = round((gross_price*.8130081300813008), 2)
         netto_price_str = str(netto_price)
 
-        off_price = round((netto_price*.75), 2)
+        off_price = round((netto_price*off_amount), 2)
         off_price_str = str(off_price)
 
         if len(off_price_str.split('.')[1]) == 1:
@@ -52,7 +58,7 @@ def create_page(products: dict, title: str) -> str:
         count += 1
         # print("Product number "+str(count)+f" done\nIndex: {product['attrs']['a'][1]['text']}")
 
-    html = generate_html(result_div, title)
+    html = generate_html(result_div, title, 1-float(config['rabat']))
 
     with open(f'OUTPUT/{title}.html', 'w', encoding='utf-8') as file:
         file.write(html)
