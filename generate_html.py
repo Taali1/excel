@@ -12,9 +12,10 @@ def exists(data, value):
         return data[value]
     return '.'
 
-def create_page(products: dict, title: str, off_amount: float = 1.0) -> str:
+def create_page(products: dict, title: str) -> str:
     result_div = ''
     count = 0
+    off_amount = 1-int(config['rabat'])
     for product in products:
         desc_data, name_data = separate_desc(product['desc']['text'], product['name']['text'])
 
@@ -58,7 +59,7 @@ def create_page(products: dict, title: str, off_amount: float = 1.0) -> str:
         count += 1
         # print("Product number "+str(count)+f" done\nIndex: {product['attrs']['a'][1]['text']}")
 
-    html = generate_html(result_div, title, 1-float(config['rabat']))
+    html = generate_html(result_div, title)
 
     with open(f'OUTPUT/{title}.html', 'w', encoding='utf-8') as file:
         file.write(html)

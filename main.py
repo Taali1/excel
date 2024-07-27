@@ -1,5 +1,11 @@
 from generate_html import create_page
 from get_data import get_xml, group_xml, filter_xml
+import json
+
+# Load the configuration file
+with open('config.json', 'r') as file:
+    config = json.load(file)
+
 
 groups = [
     ['/FIRANY/FIRANY GOTOWE/ŻAKARDOWE'], # Firany gotowe
